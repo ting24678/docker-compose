@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  minio:
+    image: quay.io/minio/minio:RELEASE.2023-09-20T22-49-55Z
+    command:
+    - server
+    # s3 api 监听地址
+    - --address
+    - :9000
+    # minio web 监听地址
+    - --console-address
+    - :9090
+    # 指定 minio 存储使用的数据目录 (磁盘), 也可以使用环境变量 MINIO_VOLUMES 指定
+    - /data
+    restart: always
+    environment:
+      MINIO_ROOT_USER: madmin
+      MINIO_ROOT_PASSWORD: madmin.123
+      # 在命令中指定和使用环境变量指定二选一即可
+      # MINIO_VOLUMES: /data
+    network_mode: host
+    # ports:
+    # - 9090:9090
+    # - 9000:9000
+    volumes:
+    - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+    - ./data:/data
