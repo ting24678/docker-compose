@@ -3,4 +3,4 @@
 set -eux
 cd "$(dirname $0)"
 
-docker-compose exec nginx nginx -s reload
+docker compose exec nginx nginx -s reload
