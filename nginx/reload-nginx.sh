@@ -1,6 +1,6 @@
 #!/bin/bash
 
 set -eux
-cd "$(dirname $0)"
+cd "$(dirname "$0")"
 
 docker compose exec nginx nginx -s reload
