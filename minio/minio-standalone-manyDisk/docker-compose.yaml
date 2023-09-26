@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  minio:
+    image: quay.io/minio/minio:RELEASE.2023-09-20T22-49-55Z
+    restart: always
+    environment:
+      # - "MINIO_SERVER_URL=http://10.0.0.90:9000"
+      MINIO_ROOT_USER: madmin
+      MINIO_ROOT_PASSWORD: madmin.123
+      # 使用匹配模式指定多个数据目录 (多个磁盘)
+      # MINIO_VOLUMES: /data{1...4}
+      # 也可以使用空格分隔单独指定每个目录名
+      MINIO_VOLUMES: /data1 /data2 /data3 /data4
+    command:
+    - "server"
+    # 如果不使用环境变量, 也可以使用以下方式在启动命令中指定多个目录 (多个磁盘, 此处也支持匹配模式)
+    # - "/data1"
+    # - "/data2"
+    # - "/data3"
+    # - "/data4"
+    - "--address"
+    - ":9000" 
+    - "--console-address"
+    - ":9090"
+    network_mode: host
+    # ports:
+    # - 9000:9000
+    # - 9001:9001
+    volumes:
+    - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+    - ./data1:/data1
+    - ./data2:/data2
+    - ./data3:/data3
+    - ./data4:/data4
