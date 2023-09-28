@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  redis-stack-server:
+    image: redis/redis-stack-server:7.2.0-v0
+    command: 
+    - redis-sentinel
+    - /etc/redis/sentinel/sentinel.conf
+    restart: always
+    network_mode: host
+    # port:
+    # - 26379:26379
+    volumes:
+    - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+    # 不能只挂载配置文件, 否则容器内会没有权限修改
+    - ./sentinel:/etc/redis/sentinel
